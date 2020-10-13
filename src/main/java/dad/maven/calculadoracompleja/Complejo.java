@@ -59,13 +59,62 @@ public class Complejo {
 		return r;
 	}
 	
+	public Complejo multiply(Complejo c) {
+		Complejo r = new Complejo();
+		DoubleProperty realA = realProperty();
+		DoubleProperty realB = c.realProperty();
+		DoubleProperty imaginarioA = imaginarioProperty();
+		DoubleProperty imaginarioB = c.imaginarioProperty();
+		
+		r.realProperty().bind(realA.multiply(realB)
+				.subtract(
+						imaginarioA.multiply(imaginarioB))
+		);
+		r.imaginarioProperty().bind(realA.multiply(imaginarioB)
+				.add(
+						imaginarioA.multiply(realB)));
+		return r;
+	}
+	
+	public Complejo divide(Complejo c) {
+		Complejo r = new Complejo();
+		DoubleProperty realA = realProperty();
+		DoubleProperty realB = c.realProperty();
+		DoubleProperty imaginarioA = imaginarioProperty();
+		DoubleProperty imaginarioB = c.imaginarioProperty();
+		
+		DoubleProperty potenciaRealB = new SimpleDoubleProperty(0);
+		DoubleProperty potenciaImaginarioB = new SimpleDoubleProperty(0);
+		
+		potenciaRealB.bind(realB.multiply(realB));
+		potenciaImaginarioB.bind(imaginarioB.multiply(imaginarioB));
+		
+		r.realProperty().bind((realA.multiply(realB).add(imaginarioA.multiply(imaginarioB)))
+				.divide(potenciaRealB.add(potenciaImaginarioB))
+		);
+		
+		r.imaginarioProperty().bind((imaginarioA.multiply(realB).subtract(realA.multiply(imaginarioB)))
+				.divide(potenciaRealB.add(potenciaImaginarioB))
+		);
+		
+		return r;
+	}
+	
 	public static void main(String[] args) {
 		Complejo a = new Complejo(1, 2);
 		Complejo b = new Complejo(3, 4);
-		Complejo c = a.add(b);
+//		Complejo c = a.multiply(b);
+		Complejo c = a.divide(b);
 		
 		System.out.println(c);
 		
+		a.setReal(7);
+		a.setImaginario(2);
+		
+		b.setReal(4);
+		b.setImaginario(1);
+		
+		System.out.println(c);
 	}
 	
 }
