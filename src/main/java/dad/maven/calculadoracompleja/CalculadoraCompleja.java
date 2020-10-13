@@ -66,13 +66,13 @@ public class CalculadoraCompleja extends Application {
 		tfResultadoA.setPrefColumnCount(2);
 		tfResultadoA.setMaxWidth(100);
 		tfResultadoA.setAlignment(Pos.CENTER);
-		tfResultadoA.setEditable(false);
+		tfResultadoA.setDisable(true);
 		
 		tfResultadoB = new TextField("0");
 		tfResultadoB.setPrefColumnCount(2);
 		tfResultadoB.setMaxWidth(100);
 		tfResultadoB.setAlignment(Pos.CENTER);
-		tfResultadoB.setEditable(false);
+		tfResultadoB.setDisable(true);
 		
 		HBox hbResultado = new HBox();
 		hbResultado.setSpacing(5);
@@ -90,7 +90,7 @@ public class CalculadoraCompleja extends Application {
 		Scene escena = new Scene(root, 320, 200);
 		
 		primaryStage.setScene(escena);
-		primaryStage.setTitle("IMC");
+		primaryStage.setTitle("CalculadoraCompleja");
 		primaryStage.show();
 	}
 	
