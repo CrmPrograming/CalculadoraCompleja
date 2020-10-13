@@ -32,13 +32,14 @@ public class CalculadoraCompleja extends Application {
 		
 		VBox vbOperacion = new VBox();
 		vbOperacion.getChildren().add(cbOperador);
+		vbOperacion.setAlignment(Pos.CENTER);
 		
-		tfNumeradorA = new TextField();
+		tfNumeradorA = new TextField("0");
 		tfNumeradorA.setPrefColumnCount(2);
 		tfNumeradorA.setMaxWidth(100);
 		tfNumeradorA.setAlignment(Pos.CENTER);
 		
-		tfNumeradorB = new TextField();
+		tfNumeradorB = new TextField("0");
 		tfNumeradorB.setPrefColumnCount(2);
 		tfNumeradorB.setMaxWidth(100);
 		tfNumeradorB.setAlignment(Pos.CENTER);
@@ -47,12 +48,12 @@ public class CalculadoraCompleja extends Application {
 		hbNumerador.setSpacing(5);
 		hbNumerador.getChildren().addAll(tfNumeradorA, new Label("+"), tfNumeradorB, new Label("i"));
 		
-		tfDenominadorA = new TextField();
+		tfDenominadorA = new TextField("0");
 		tfDenominadorA.setPrefColumnCount(2);
 		tfDenominadorA.setMaxWidth(100);
 		tfDenominadorA.setAlignment(Pos.CENTER);
 		
-		tfDenominadorB = new TextField();
+		tfDenominadorB = new TextField("0");
 		tfDenominadorB.setPrefColumnCount(2);
 		tfDenominadorB.setMaxWidth(100);
 		tfDenominadorB.setAlignment(Pos.CENTER);
@@ -61,13 +62,13 @@ public class CalculadoraCompleja extends Application {
 		hbDenominador.setSpacing(5);
 		hbDenominador.getChildren().addAll(tfDenominadorA, new Label("+"), tfDenominadorB, new Label("i"));
 		
-		tfResultadoA = new TextField();
+		tfResultadoA = new TextField("0");
 		tfResultadoA.setPrefColumnCount(2);
 		tfResultadoA.setMaxWidth(100);
 		tfResultadoA.setAlignment(Pos.CENTER);
 		tfResultadoA.setEditable(false);
 		
-		tfResultadoB = new TextField();
+		tfResultadoB = new TextField("0");
 		tfResultadoB.setPrefColumnCount(2);
 		tfResultadoB.setMaxWidth(100);
 		tfResultadoB.setAlignment(Pos.CENTER);
@@ -78,6 +79,7 @@ public class CalculadoraCompleja extends Application {
 		hbResultado.getChildren().addAll(tfResultadoA, new Label("+"), tfResultadoB, new Label("i"));
 		
 		VBox vbNumeros = new VBox();
+		vbNumeros.setAlignment(Pos.CENTER);
 		vbNumeros.getChildren().addAll(hbNumerador, hbDenominador, new Separator(), hbResultado);
 		
 		HBox root = new HBox();
