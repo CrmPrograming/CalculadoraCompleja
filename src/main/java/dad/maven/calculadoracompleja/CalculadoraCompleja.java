@@ -2,7 +2,6 @@ package dad.maven.calculadoracompleja;
 
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -24,32 +23,52 @@ public class CalculadoraCompleja extends Application {
 	private TextField tfResultadoA;
 	private TextField tfResultadoB;
 	
-	private Complejo complejoA;
-	private Complejo complejoB;
-	private Complejo resultado;
+	private Complejo complejoA = new Complejo();
+	private Complejo complejoB = new Complejo();
+	private Complejo resultado = new Complejo();
 	
 	private String[] _operador = {"+", "-", "*", "/"};
 	
-	private void onCambiarAction(ActionEvent e) {
+	private void onCambiarAction() {
 		String operacion = cbOperador.getSelectionModel().getSelectedItem();
-		Complejo aux = new Complejo();
-		
 		switch (operacion) {
 			case "+":
-				aux = complejoA.add(complejoB);
+				resultado.realProperty().bind(complejoA.realProperty().add(complejoB.realProperty()));
+				resultado.imaginarioProperty().bind(complejoA.imaginarioProperty().add(complejoB.imaginarioProperty()));
 			break;
 			case "-":
-				aux = complejoA.substract(complejoB);
+				resultado.realProperty().bind(complejoA.realProperty().subtract(complejoB.realProperty()));
+				resultado.imaginarioProperty().bind(complejoA.imaginarioProperty().subtract(complejoB.imaginarioProperty()));
 			break;
 			case "*":
-				aux = complejoA.multiply(complejoB);
+				resultado.realProperty().bind(
+						complejoA.realProperty().multiply(complejoB.realProperty())
+						.subtract(
+						complejoA.imaginarioProperty().multiply(complejoB.imaginarioProperty()))
+						);
+				resultado.imaginarioProperty().bind(
+						complejoA.realProperty().multiply(complejoB.imaginarioProperty())
+						.add(
+						complejoA.imaginarioProperty().multiply(complejoB.realProperty()))
+						);
 			break;
 			case "/":
-				aux = complejoA.divide(complejoB);
+				resultado.realProperty().bind(
+						(complejoA.realProperty().multiply(complejoB.realProperty()).add(complejoA.imaginarioProperty().multiply(complejoB.imaginarioProperty())))
+						.divide(
+						(complejoB.realProperty().multiply(complejoB.realProperty())
+								.add(complejoB.imaginarioProperty().multiply(complejoB.imaginarioProperty()))))
+				);
+				
+				resultado.imaginarioProperty().bind(
+						(complejoA.imaginarioProperty().multiply(complejoB.realProperty()).subtract(complejoA.realProperty().multiply(complejoB.imaginarioProperty())))
+						.divide(
+						(complejoB.realProperty().multiply(complejoB.realProperty())
+								.add(complejoB.imaginarioProperty().multiply(complejoB.imaginarioProperty()))))
+				);
 			break;
 		}
-		resultado.setReal(aux.getReal());
-		resultado.setImaginario(aux.getImaginario());
+		
 	}
 
 	@Override
@@ -59,8 +78,7 @@ public class CalculadoraCompleja extends Application {
 		
 		cbOperador = new ComboBox<String>();
 		cbOperador.getItems().addAll(_operador);
-		cbOperador.getSelectionModel().selectFirst();
-		cbOperador.setOnAction(e -> onCambiarAction(e));
+		cbOperador.setOnAction(e -> onCambiarAction());
 		
 		VBox vbOperacion = new VBox();
 		vbOperacion.getChildren().add(cbOperador);
@@ -84,8 +102,6 @@ public class CalculadoraCompleja extends Application {
 		hbNumerador.setSpacing(5);
 		hbNumerador.getChildren().addAll(tfNumeradorA, new Label("+"), tfNumeradorB, new Label("i"));
 		
-		complejoA = new Complejo();
-		
 		Bindings.bindBidirectional(tfNumeradorA.textProperty(), complejoA.realProperty(), new NumberStringConverter());
 		Bindings.bindBidirectional(tfNumeradorB.textProperty(), complejoA.imaginarioProperty(), new NumberStringConverter());
 		
@@ -105,8 +121,6 @@ public class CalculadoraCompleja extends Application {
 		hbDenominador.setSpacing(5);
 		hbDenominador.getChildren().addAll(tfDenominadorA, new Label("+"), tfDenominadorB, new Label("i"));
 		
-		complejoB = new Complejo();
-		
 		Bindings.bindBidirectional(tfDenominadorA.textProperty(), complejoB.realProperty(), new NumberStringConverter());
 		Bindings.bindBidirectional(tfDenominadorB.textProperty(), complejoB.imaginarioProperty(), new NumberStringConverter());
 		
@@ -123,8 +137,6 @@ public class CalculadoraCompleja extends Application {
 		tfResultadoB.setMaxWidth(100);
 		tfResultadoB.setAlignment(Pos.CENTER);
 		tfResultadoB.setDisable(true);
-		
-		resultado = new Complejo();
 		
 		Bindings.bindBidirectional(tfResultadoA.textProperty(), resultado.realProperty(), new NumberStringConverter());
 		Bindings.bindBidirectional(tfResultadoB.textProperty(), resultado.imaginarioProperty(), new NumberStringConverter());
@@ -149,6 +161,8 @@ public class CalculadoraCompleja extends Application {
 		primaryStage.setScene(escena);
 		primaryStage.setTitle("CalculadoraCompleja");
 		primaryStage.show();
+		
+		cbOperador.getSelectionModel().selectFirst();
 	}
 	
 	public static void main(String[] args) {
