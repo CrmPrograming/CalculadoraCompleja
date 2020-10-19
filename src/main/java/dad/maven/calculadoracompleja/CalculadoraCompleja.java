@@ -74,7 +74,7 @@ public class CalculadoraCompleja extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		// Selector de operación
+		// Selector de operaciÃ³n
 		
 		cbOperador = new ComboBox<String>();
 		cbOperador.getItems().addAll(_operador);
@@ -84,9 +84,9 @@ public class CalculadoraCompleja extends Application {
 		vbOperacion.getChildren().add(cbOperador);
 		vbOperacion.setAlignment(Pos.CENTER);
 		
-		// Campos para números complejos
+		// Campos para nÃºmeros complejos
 		
-		// Primer número
+		// Primer nÃºmero
 		
 		tfNumeradorA = new TextField("0");
 		tfNumeradorA.setPrefColumnCount(4);
@@ -105,7 +105,7 @@ public class CalculadoraCompleja extends Application {
 		Bindings.bindBidirectional(tfNumeradorA.textProperty(), complejoA.realProperty(), new NumberStringConverter());
 		Bindings.bindBidirectional(tfNumeradorB.textProperty(), complejoA.imaginarioProperty(), new NumberStringConverter());
 		
-		// Segundo número
+		// Segundo nÃºmero
 		
 		tfDenominadorA = new TextField("0");
 		tfDenominadorA.setPrefColumnCount(4);
@@ -124,7 +124,7 @@ public class CalculadoraCompleja extends Application {
 		Bindings.bindBidirectional(tfDenominadorA.textProperty(), complejoB.realProperty(), new NumberStringConverter());
 		Bindings.bindBidirectional(tfDenominadorB.textProperty(), complejoB.imaginarioProperty(), new NumberStringConverter());
 		
-		// Número resultante
+		// NÃºmero resultante
 		
 		tfResultadoA = new TextField("0");
 		tfResultadoA.setPrefColumnCount(4);
